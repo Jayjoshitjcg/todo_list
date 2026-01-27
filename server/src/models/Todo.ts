@@ -1,12 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../db/sequelize";
 
-export class Todo extends Model {
-    public id!: string;
-    public title!: string;
-    public completed!: boolean;
-    public created_at!: Date;
-}
+export default class Todo extends Model { }
 
 Todo.init(
     {
@@ -18,6 +13,10 @@ Todo.init(
         title: {
             type: DataTypes.TEXT,
             allowNull: false,
+        },
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: true,
         },
         completed: {
             type: DataTypes.BOOLEAN,
@@ -35,4 +34,4 @@ Todo.init(
     }
 );
 
-export default Todo;
+Todo.sync({ alter: true });

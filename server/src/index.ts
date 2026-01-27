@@ -1,11 +1,18 @@
 //index.ts
 
 import express from 'express'
+import cors from "cors";
 import todoRouts from './routes/todo.routes'
 import sequelize from './db/sequelize'
 
 const app = express()
 const PORT = 3030
+
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 
 app.use(express.json())
 
