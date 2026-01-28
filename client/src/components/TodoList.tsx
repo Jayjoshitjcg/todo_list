@@ -13,6 +13,9 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import DeleteIcon from '@mui/icons-material/Delete';
+import Checkbox from '@mui/material/Checkbox';
+import EditIcon from '@mui/icons-material/Edit';
 import React, { useEffect, useState } from 'react'
 import BASE_URL from '@/Services/urlHelper'
 
@@ -33,7 +36,6 @@ const TodoList = () => {
                         "ngrok-skip-browser-warning": "true",
                     },
                 })
-                console.log("res==>", res)
                 setTodos(res.data.data)
             } catch (err) {
                 console.log("error...", err)
@@ -42,9 +44,29 @@ const TodoList = () => {
         fetchTodos()
     }, [])
 
-    const handlegoback = () => {
-        router.push('/Todo')
+    const handleaddtaskform = () => {
+        router.push('/Todo/Form')
     }
+
+    const handleDeleteTodo = async (id: string) => {
+        try {
+            await axios.delete(`${BASE_URL}/api/todos/${id}`, {
+                headers: {
+                    "ngrok-skip-browser-warning": "true",
+                },
+            })
+            setTodos(prev => prev.filter(todo => todo.id !== id))
+        } catch (error) {
+            console.log("Delete error:", error)
+        }
+    }
+
+    const handleEditTodo = (id: string) => {
+        router.push(`/Todo/Form?id=${id}`)
+    }
+
+
+
 
     return (
         <Box sx={{
@@ -59,8 +81,8 @@ const TodoList = () => {
                 display: 'flex',
                 alignItems: 'center',
                 pt: 7,
-                height: '90vh',
-                width: '90vw',
+                height: '95vh',
+                width: '95vw',
                 flexDirection: 'column',
                 gap: 3,
                 background: 'rgba(255, 255, 255, 0.15)',
@@ -74,7 +96,7 @@ const TodoList = () => {
                 }}><strong>Todo List</strong></Typography>
 
 
-                <Button variant='contained' onClick={handlegoback} sx={{
+                <Button variant='contained' onClick={handleaddtaskform} sx={{
                     backgroundColor: '#1f1db6',
                     borderRadius: '10px',
                     width: '300px',
@@ -83,11 +105,13 @@ const TodoList = () => {
                     Add new todo
                 </Button>
 
-                <TableContainer component={Paper} sx={{ mt: 4, backgroundColor: '#dddada' }}>
+                <TableContainer component={Paper} sx={{ mt: 2, }}>
                     <Table>
-                        <TableHead>
+                        <TableHead sx={{ backgroundColor: '#dddada' }}>
                             <TableRow>
                                 <TableCell><b>Task Title</b></TableCell>
+                                <TableCell><b>Actions</b></TableCell>
+                                <TableCell><b>Check To Complete</b></TableCell>
                             </TableRow>
                         </TableHead>
 
@@ -95,6 +119,24 @@ const TodoList = () => {
                             {todos?.map((todo) => (
                                 <TableRow key={todo.id}>
                                     <TableCell>{todo.title}</TableCell>
+                                    <TableCell>
+                                        <Box sx={{
+                                            display: 'flex',
+                                            gap: 2
+                                        }}>
+                                            <DeleteIcon
+                                                sx={{ cursor: 'pointer', color: 'red' }}
+                                                onClick={() => handleDeleteTodo(todo.id)}
+                                            />
+
+                                            <EditIcon
+                                                sx={{ cursor: 'pointer', color: 'blue' }}
+                                                onClick={() => handleEditTodo(todo.id)}
+                                            />
+
+                                        </Box>
+                                    </TableCell>
+                                    <TableCell><Checkbox /></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

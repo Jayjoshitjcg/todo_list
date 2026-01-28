@@ -1,2 +1,2 @@
-const BASE_URL = "https://407c946f6f41.ngrok-free.app"
+const BASE_URL = "https://39c5e16bd46d.ngrok-free.app"
 export default BASE_URL

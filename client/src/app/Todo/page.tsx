@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import TodoForm from '@/components/TodoForm'
+import TodoList from '@/components/TodoList'
 
 const page = () => {
     return (
         <Box>
-            <TodoForm />
+            <TodoList />
         </Box>
     )
 }
