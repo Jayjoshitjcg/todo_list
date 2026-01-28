@@ -17,7 +17,7 @@ import React, { useEffect, useState } from 'react'
 import BASE_URL from '@/Services/urlHelper'
 
 interface Todo {
-    id: number
+    id: string
     title: string
 }
 
@@ -28,8 +28,13 @@ const TodoList = () => {
     useEffect(() => {
         const fetchTodos = async () => {
             try {
-                const res = await axios.get(`${BASE_URL}/api/todos`)
-                setTodos(res.data.todos)
+                const res = await axios.get(`${BASE_URL}/api/todos`, {
+                    headers: {
+                        "ngrok-skip-browser-warning": "true",
+                    },
+                })
+                console.log("res==>", res)
+                setTodos(res.data.data)
             } catch (err) {
                 console.log("error...", err)
             }

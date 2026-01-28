@@ -12,7 +12,7 @@ export const getTodos = async (req: Request, res: Response) => {
         })
     } catch (err) {
         console.error(err)
-        return res.status(500).send("Internal Serve error")
+        return res.status(500).send("Internal Server error")
     }
 
 }
@@ -96,7 +96,7 @@ export const editTodo = async (req: Request, res: Response) => {
 
         return res.status(200).json({
             status: 200,
-            message: 'Data updtaed successfully',
+            message: 'Data updated successfully',
             data: todo
         })
 

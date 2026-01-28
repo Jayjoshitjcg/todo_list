@@ -17,6 +17,10 @@ const TodoForm = () => {
         try {
             await axios.post(`${BASE_URL}/api/todos`, {
                 title,
+            }, {
+                headers: {
+                    "ngrok-skip-browser-warning": "true",
+                },
             })
             router.push('/Todo/List')
         } catch (err) {

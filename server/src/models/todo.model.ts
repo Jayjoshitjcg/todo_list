@@ -39,7 +39,7 @@ export const updateTodo = async (
     id: string,
     title: string,
     description: string,
-    completeted: boolean,
+    completed: boolean,
 ) => {
     // const { rows } = await pool.query(
     //     'UPDATE todos SET title=$1, description=$2, completed=$3 WHERE id=$4 RETURNING *',
@@ -57,7 +57,7 @@ export const updateTodo = async (
     await Todo.update({
         title,
         description,
-        completeted
+        completed
     }, {
         where: { id }
     })
